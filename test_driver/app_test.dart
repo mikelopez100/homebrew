@@ -1,10 +1,11 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
+import 'dart:io';
 
 void main() {
   group('Homebrew App - ', () {
     FlutterDriver driver;
-
+    final timeoutV = Timeout.factor(int.tryParse(Platform.environment["CMTV"] ?? '16'));
     // Connect to the Flutter driver before running any tests.
     setUpAll(() async {
       driver = await FlutterDriver.connect();
@@ -16,6 +17,8 @@ void main() {
         driver.close();
       }
     });
+
+  group("Acceptance Test", () {
 
   test('given that I select "french press" and want to make "5" cups then I should see the recommended settings and be taken back home when I am done', () async {
       //expect to see HOMEBREW
@@ -58,7 +61,7 @@ void main() {
       //expect to see "84 - course ground coffee"
       final reccoffeeTextFinder = find.byValueKey('rec-grounds-text');
 
-      expect(await driver.getText(reccoffeeTextFinder), "84g - course ground coffee");
+      expect(await driver.getText(reccoffeeTextFinder), "84g - coarse ground coffee");
 
 
       //expect to see "1183g - water"
@@ -113,7 +116,7 @@ void main() {
       //expect to see "84 - course ground coffee"
       final reccoffeeTextFinder = find.byValueKey('rec-grounds-text');
 
-      expect(await driver.getText(reccoffeeTextFinder), "84g - course ground coffee");
+      expect(await driver.getText(reccoffeeTextFinder), "70g - medium ground coffee");
 
 
       //expect to see "1183g - water"
@@ -165,7 +168,7 @@ void main() {
       //expect to see "84 - course ground coffee"
       final reccoffeeTextFinder = find.byValueKey('rec-grounds-text');
 
-      expect(await driver.getText(reccoffeeTextFinder), "84g - course ground coffee");
+      expect(await driver.getText(reccoffeeTextFinder), "84g - coarse ground coffee");
 
 
       //expect to see "1183g - water"
@@ -199,7 +202,20 @@ void main() {
       await driver.tap(frenchpressBtnFinder);
 
       final continueBtnFinder = find.byValueKey('continue-btn');
+
+      await driver.tap(continueBtnFinder);
+
+      final cupsTextFinder = find.byValueKey('cups-text');
+
+      expect(await driver.getText(cupsTextFinder), "How many cups would you like?");
+
+      final continuecupsBtnFinder = find.byValueKey('cups-continue-btn');
+
+      await driver.tap(continuecupsBtnFinder);
+
+      expect(await driver.getText(cupsTextFinder), "How many cups would you like?");
     });
+    }, timeout: timeoutV);
   });
 
   

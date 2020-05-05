@@ -2,28 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:homebrew/screens/recipe_screen.dart';
 
 class CupsScreen extends StatefulWidget {
-  @override
   int choice;
   CupsScreen(this.choice);
+  @override
+
   _CupsScreenState createState() => _CupsScreenState();
 }
 
 class _CupsScreenState extends State<CupsScreen> {
   @override
   Widget build(BuildContext context) {
-    calculateRecipe(double cups, int choice){
-      if(choice==1){
-        double totalwater = 236.56*cups;
-        double totalgrounds = totalwater/14;
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>RecommendedScreen(totalgrounds, totalwater)));
+
+    _calculateRecipe(double cups, int choice) {
+
+      if (choice == 1) {
+        bool coarse = true;
+        double totalwater = 236.56 * cups;
+        double totalgrounds = totalwater / 14;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    RecommendedScreen(totalgrounds, totalwater, coarse)));
       }
-      else if(choice==2){
-        double totalwater = 236.56*cups;
-        double totalgrounds = totalwater/17;
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>RecommendedScreen(totalgrounds, totalwater)));
+      
+       else if (choice == 2) {
+         bool coarse = false;
+        double totalwater = 236.56 * cups;
+        double totalgrounds = totalwater / 17;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    RecommendedScreen(totalgrounds, totalwater, coarse)));
       }
     }
-    
+
     TextEditingController taskCtrl = TextEditingController();
     return Scaffold(
         appBar: AppBar(
@@ -72,17 +86,24 @@ class _CupsScreenState extends State<CupsScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     onPressed: () {
-                      if()
-                      double cups  = double.parse(taskCtrl.text);
-                      
-                      calculateRecipe(cups, widget.choice);
+                      String textCups = taskCtrl.text;
+                      if (taskCtrl.text != "" &&
+                          RegExp(r'[0-9]').hasMatch(taskCtrl.text)) {
+
+                        double cups = double.parse(textCups);
+
+                        _calculateRecipe(cups, widget.choice);
+                      }
                     },
                     key: Key('cups-continue-btn'),
                     child: Text("Continue",
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Montserrat',
-                            color: Color(0xffe5e5e5)))),
+                            color: (taskCtrl.text != "" &&
+                                    RegExp(r'[0-9]').hasMatch(taskCtrl.text))
+                                ? Color(0xff4c748b)
+                                : Color(0xffe5e5e5)))),
               ),
             ],
           ),

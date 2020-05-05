@@ -3,7 +3,7 @@ import 'package:homebrew/screens/cups_screen.dart';
 
 class ChooseDeviceScreen extends StatefulWidget {
   @override
-  double selected = 0;
+  int selected = 0;
   _ChooseDeviceScreenState createState() => _ChooseDeviceScreenState();
 }
 
@@ -101,11 +101,11 @@ class _ChooseDeviceScreenState extends State<ChooseDeviceScreen> {
                         : Color(0xffe2e2e2),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
-                    onPressed: () {
+                    onPressed: () {widget.selected!=0 ?
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CupsScreen(widget.selected)));
+                                builder: (context) => CupsScreen(widget.selected))): null;
                       
                     },
                     key: Key('continue-btn'),

@@ -5,7 +5,8 @@ class RecommendedScreen extends StatefulWidget {
   @override
   double totalwater;
   double totalgrounds;
-  RecommendedScreen( this.totalwater, this.totalgrounds);
+  bool coarse;
+  RecommendedScreen( this.totalwater, this.totalgrounds, this.coarse);
   _RecommendedScreenState createState() => _RecommendedScreenState();
 }
 
@@ -56,13 +57,13 @@ class _RecommendedScreenState extends State<RecommendedScreen> {
                                         fontFamily: 'Montserrat',
                                         color: Color(0xff4c748b))),
                                 Text(""),
-                                Text("84g - course ground coffee",
+                                Text( widget.coarse==true ? widget.totalwater.round().toString() +"g - coarse ground coffee": widget.totalwater.round().toString() +"g - medium ground coffee",
                                 key: Key('rec-grounds-text'),
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontFamily: 'Montserrat',
                                         color: Color(0xff4c748b))),
-                                Text("1183g - water",
+                                Text(widget.totalgrounds.round().toString() + "g - water",
                                 key: Key('rec-water-text'),
                                     style: TextStyle(
                                         fontSize: 18,
