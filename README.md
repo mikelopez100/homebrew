@@ -2,6 +2,12 @@
 
 A  Flutter app for crafting the perfect cup of coffee. Developed utilizing unit, widget, and integration tests.
 
+To get running, you must have either a compatible device or emulator installed.
+Once connected, you can run the application by executing this command.
+
+```console
+flutter run -d yourDeviceID
+```
 
 # Widget Tests
 
